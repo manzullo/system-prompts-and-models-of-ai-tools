@@ -8,6 +8,19 @@ Un assistente avanzato per la produttività personale che ti aiuta a:
 
 ## 🚀 Quick Start
 
+### 🌐 Web App (Consigliato)
+```bash
+# Installa Flask
+pip install flask
+
+# Avvia la web app
+cd web
+python app.py
+
+# Apri http://localhost:5000 nel browser
+```
+
+### 💻 CLI (Linea di comando)
 ```bash
 # Avvia l'interfaccia interattiva
 python main.py
@@ -70,19 +83,23 @@ Tecniche basate sulla ricerca di Pychyl, Clear, Newport:
 
 ```
 project-decision-tool/
-├── main.py              # Entry point
-├── requirements.txt     # Dipendenze (nessuna!)
-├── core/
-│   ├── database.py      # SQLite database manager
+├── main.py              # Entry point CLI
+├── requirements.txt     # Dipendenze
+├── core/                # Logica business
+│   ├── database.py      # SQLite database
 │   ├── project.py       # Modello Project
-│   ├── task.py          # Modello Task + suggerimenti
+│   ├── task.py          # Modello Task
 │   ├── decision_engine.py   # Algoritmo decisionale
 │   ├── focus_mode.py    # Timer Pomodoro
-│   ├── gamification.py  # Punti, livelli, achievements
-│   ├── anti_procrastination.py  # Tecniche anti-procrastinazione
-│   └── analytics.py     # Statistiche e insights
-└── cli/
-    └── interface.py     # Interfaccia a linea di comando
+│   ├── gamification.py  # Punti, livelli
+│   ├── anti_procrastination.py
+│   └── analytics.py     # Statistiche
+├── cli/
+│   └── interface.py     # Interfaccia CLI
+└── web/                 # 🌐 Web App
+    ├── app.py           # Server Flask
+    ├── templates/       # HTML
+    └── static/          # CSS, JS
 ```
 
 ## 🎮 Come Usare

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Decision Tool</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="logo">
+            <span class="logo-icon">🎯</span>
+            <span class="logo-text">DecisionTool</span>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </li>
+            <li class="nav-item" data-section="decide">
+                <span class="nav-icon">🤔</span>
+                <span>Cosa Fare?</span>
+            </li>
+            <li class="nav-item" data-section="focus">
+                <span class="nav-icon">⏱️</span>
+                <span>Focus Mode</span>
+            </li>
+            <li class="nav-item" data-section="projects">
+                <span class="nav-icon">📁</span>
+                <span>Progetti</span>
+            </li>
+            <li class="nav-item" data-section="tasks">
+                <span class="nav-icon">✅</span>
+                <span>Task</span>
+            </li>
+            <li class="nav-item" data-section="antiproc">
+                <span class="nav-icon">💪</span>
+                <span>Anti-Procrastinazione</span>
+            </li>
+            <li class="nav-item" data-section="achievements">
+                <span class="nav-icon">🏆</span>
+                <span>Achievements</span>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="streak-display">
+                <span class="streak-icon">🔥</span>
+                <span class="streak-count" id="sidebar-streak">0</span>
+                <span>giorni</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-left">
+                <h1 id="page-title">Dashboard</h1>
+            </div>
+            <div class="header-right">
+                <div class="user-stats">
+                    <div class="stat-badge">
+                        <span class="stat-icon" id="user-level-icon">🌱</span>
+                        <span id="user-level">Lv. 1</span>
+                    </div>
+                    <div class="stat-badge">
+                        <span class="stat-icon">⭐</span>
+                        <span id="user-points">0</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sections Container -->
+        <div class="sections-container">
+
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="dashboard-grid">
+                    <!-- Profile Card -->
+                    <div class="card profile-card">
+                        <div class="profile-header">
+                            <div class="profile-level" id="profile-level-icon">🌱</div>
+                            <div class="profile-info">
+                                <h3 id="profile-name">User</h3>
+                                <p id="profile-level-name">Novizio</p>
+                            </div>
+                        </div>
+                        <div class="level-progress">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="level-progress"></div>
+                            </div>
+                            <span class="progress-text" id="level-progress-text">0%</span>
+                        </div>
+                        <div class="profile-stats">
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profile-streak">0</span>
+                                <span class="stat-label">🔥 Streak</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profile-tasks">0</span>
+                                <span class="stat-label">✅ Task</span>
+                            </div>
+                            <div class="profile-stat">
+                                <span class="stat-value" id="profile-focus">0</span>
+                                <span class="stat-label">⏱️ Min Focus</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today Stats Card -->
+                    <div class="card stats-card">
+                        <h3>📅 Oggi</h3>
+                        <div class="today-stats">
+                            <div class="today-stat">
+                                <span class="today-value" id="today-focus">0</span>
+                                <span class="today-label">minuti focus</span>
+                            </div>
+                            <div class="today-stat">
+                                <span class="today-value" id="today-tasks">0</span>
+                                <span class="today-label">task completati</span>
+                            </div>
+                            <div class="today-stat">
+                                <span class="today-value" id="today-points">0</span>
+                                <span class="today-label">punti guadagnati</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Productivity Score Card -->
+                    <div class="card score-card">
+                        <h3>📈 Productivity Score</h3>
+                        <div class="score-display">
+                            <div class="score-circle">
+                                <svg viewBox="0 0 36 36" class="score-svg">
+                                    <path class="score-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <path class="score-fill" id="score-circle-fill" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                                    <text x="18" y="20.5" class="score-text" id="score-value">0</text>
+                                </svg>
+                            </div>
+                            <p class="score-description" id="score-description">Inizia a lavorare!</p>
+                        </div>
+                    </div>
+
+                    <!-- Quick Decision Card -->
+                    <div class="card decision-card">
+                        <h3>🎯 Cosa fare adesso?</h3>
+                        <div id="quick-recommendation">
+                            <p class="loading">Analizzando...</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="getQuickDecision()">
+                            Nuova Raccomandazione
+                        </button>
+                    </div>
+
+                    <!-- Daily Challenges Card -->
+                    <div class="card challenges-card">
+                        <h3>🎮 Sfide di Oggi</h3>
+                        <div id="challenges-list" class="challenges-list">
+                            <!-- Popolato via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Insights Card -->
+                    <div class="card insights-card">
+                        <h3>💡 Insights</h3>
+                        <div id="insights-list" class="insights-list">
+                            <!-- Popolato via JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Decide Section -->
+            <section id="decide" class="section">
+                <div class="decide-container">
+                    <div class="card decide-form-card">
+                        <h3>🤔 Aiutami a decidere</h3>
+                        <p class="subtitle">Rispondi a queste domande per una raccomandazione personalizzata</p>
+
+                        <div class="form-group">
+                            <label>Come ti senti in termini di energia?</label>
+                            <div class="energy-selector">
+                                <button class="energy-btn" data-value="low">🔋 Bassa</button>
+                                <button class="energy-btn active" data-value="medium">🔋🔋 Media</button>
+                                <button class="energy-btn" data-value="high">🔋🔋🔋 Alta</button>
+                                <button class="energy-btn" data-value="extreme">⚡ Max</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quanto tempo hai?</label>
+                            <div class="time-selector">
+                                <button class="time-btn" data-value="15">15 min</button>
+                                <button class="time-btn" data-value="30">30 min</button>
+                                <button class="time-btn active" data-value="60">1 ora</button>
+                                <button class="time-btn" data-value="120">2+ ore</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mood (1-10): <span id="mood-value">5</span></label>
+                            <input type="range" min="1" max="10" value="5" class="mood-slider" id="mood-slider">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Modalità decisione</label>
+                            <select id="decision-mode" class="select-input">
+                                <option value="smart">🧠 Intelligente (considera tutto)</option>
+                                <option value="urgent">⏰ Urgente (deadline)</option>
+                                <option value="energy">🔋 Match Energia</option>
+                                <option value="quick">⚡ Quick Wins</option>
+                                <option value="random">🎲 Random Top 3</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-primary btn-large" onclick="getDecision()">
+                            🎯 Cosa Dovrei Fare?
+                        </button>
+                    </div>
+
+                    <div class="card recommendation-card" id="recommendation-result" style="display: none;">
+                        <!-- Popolato via JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Focus Section -->
+            <section id="focus" class="section">
+                <div class="focus-container">
+                    <!-- Timer Display -->
+                    <div class="card timer-card" id="timer-card">
+                        <div class="timer-display">
+                            <div class="timer-circle" id="timer-circle">
+                                <svg viewBox="0 0 100 100">
+                                    <circle class="timer-bg" cx="50" cy="50" r="45"/>
+                                    <circle class="timer-progress" id="timer-progress" cx="50" cy="50" r="45"/>
+                                </svg>
+                                <div class="timer-text">
+                                    <span class="timer-time" id="timer-time">25:00</span>
+                                    <span class="timer-status" id="timer-status">Pronto</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="timer-task" id="timer-task-display" style="display: none;">
+                            <span>📋</span>
+                            <span id="timer-task-name"></span>
+                        </div>
+
+                        <div class="timer-controls">
+                            <button class="btn btn-icon" id="btn-stop" onclick="stopFocus()" disabled>
+                                ⏹️
+                            </button>
+                            <button class="btn btn-primary btn-large" id="btn-start" onclick="showFocusSetup()">
+                                ▶️ Inizia Focus
+                            </button>
+                            <button class="btn btn-icon" id="btn-pause" onclick="togglePause()" disabled>
+                                ⏸️
+                            </button>
+                        </div>
+
+                        <div class="timer-interruptions" id="timer-interruptions" style="display: none;">
+                            <span>⚡ Interruzioni: <span id="interruption-count">0</span></span>
+                            <button class="btn btn-small" onclick="logInterruption()">+ Distrazione</button>
+                        </div>
+                    </div>
+
+                    <!-- Focus Setup Modal -->
+                    <div class="modal" id="focus-setup-modal">
+                        <div class="modal-content">
+                            <h3>⏱️ Nuova Sessione Focus</h3>
+
+                            <div class="form-group">
+                                <label>Tipo di sessione</label>
+                                <div class="session-types">
+                                    <button class="session-btn active" data-type="pomodoro" data-duration="25">
+                                        🍅 Pomodoro<br><small>25 min</small>
+                                    </button>
+                                    <button class="session-btn" data-type="short" data-duration="15">
+                                        ⚡ Breve<br><small>15 min</small>
+                                    </button>
+                                    <button class="session-btn" data-type="long" data-duration="50">
+                                        🧘 Lunga<br><small>50 min</small>
+                                    </button>
+                                    <button class="session-btn" data-type="break_short" data-duration="5">
+                                        ☕ Pausa<br><small>5 min</small>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Task (opzionale)</label>
+                                <select id="focus-task-select" class="select-input">
+                                    <option value="">-- Nessun task --</option>
+                                </select>
+                            </div>
+
+                            <div class="modal-actions">
+                                <button class="btn btn-secondary" onclick="closeFocusSetup()">Annulla</button>
+                                <button class="btn btn-primary" onclick="startFocus()">▶️ Inizia</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today Summary -->
+                    <div class="card focus-summary-card">
+                        <h3>📊 Oggi</h3>
+                        <div class="focus-summary">
+                            <div class="summary-stat">
+                                <span class="summary-value" id="focus-today-pomodoros">0</span>
+                                <span class="summary-label">🍅 Pomodori</span>
+                            </div>
+                            <div class="summary-stat">
+                                <span class="summary-value" id="focus-today-minutes">0</span>
+                                <span class="summary-label">⏱️ Minuti</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tips -->
+                    <div class="card tips-card">
+                        <h3>💡 Consigli Focus</h3>
+                        <ul class="tips-list">
+                            <li>🔇 Metti il telefono in modalità aereo</li>
+                            <li>🎧 Usa musica ambient o rumore bianco</li>
+                            <li>💧 Tieni una bottiglia d'acqua vicina</li>
+                            <li>🚪 Chiudi tutte le tab non necessarie</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="section">
+                <div class="section-header">
+                    <h2>📁 I Miei Progetti</h2>
+                    <button class="btn btn-primary" onclick="showNewProjectModal()">+ Nuovo Progetto</button>
+                </div>
+
+                <div class="projects-grid" id="projects-list">
+                    <!-- Popolato via JS -->
+                </div>
+
+                <!-- New Project Modal -->
+                <div class="modal" id="new-project-modal">
+                    <div class="modal-content modal-large">
+                        <h3>📁 Nuovo Progetto</h3>
+
+                        <div class="form-group">
+                            <label>Nome del progetto *</label>
+                            <input type="text" id="project-name" class="text-input" placeholder="Es: Lanciare il mio blog">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Descrizione</label>
+                            <textarea id="project-description" class="text-input" rows="2"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Importanza (1-10)</label>
+                                <input type="range" min="1" max="10" value="5" id="project-importance">
+                                <span id="project-importance-value">5</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Urgenza (1-10)</label>
+                                <input type="range" min="1" max="10" value="5" id="project-urgency">
+                                <span id="project-urgency-value">5</span>
+                            </div>
+                            <div class="form-group">
+                                <label>Entusiasmo (1-10)</label>
+                                <input type="range" min="1" max="10" value="5" id="project-excitement">
+                                <span id="project-excitement-value">5</span>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Energia richiesta</label>
+                                <select id="project-energy" class="select-input">
+                                    <option value="low">🔋 Bassa</option>
+                                    <option value="medium" selected>🔋🔋 Media</option>
+                                    <option value="high">🔋🔋🔋 Alta</option>
+                                    <option value="extreme">⚡ Estrema</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Ore stimate</label>
+                                <input type="number" id="project-hours" class="text-input" value="10" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Deadline</label>
+                                <input type="date" id="project-deadline" class="text-input">
+                            </div>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="closeNewProjectModal()">Annulla</button>
+                            <button class="btn btn-primary" onclick="createProject()">Crea Progetto</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tasks Section -->
+            <section id="tasks" class="section">
+                <div class="section-header">
+                    <h2>✅ I Miei Task</h2>
+                    <button class="btn btn-primary" onclick="showNewTaskModal()">+ Nuovo Task</button>
+                </div>
+
+                <div class="tasks-list" id="tasks-list">
+                    <!-- Popolato via JS -->
+                </div>
+
+                <!-- New Task Modal -->
+                <div class="modal" id="new-task-modal">
+                    <div class="modal-content">
+                        <h3>✅ Nuovo Task</h3>
+
+                        <div class="form-group">
+                            <label>Nome del task *</label>
+                            <input type="text" id="task-name" class="text-input" placeholder="Es: Scrivere il primo articolo">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Progetto (opzionale)</label>
+                            <select id="task-project" class="select-input">
+                                <option value="">-- Nessun progetto --</option>
+                            </select>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Minuti stimati</label>
+                                <input type="number" id="task-minutes" class="text-input" value="25" min="5">
+                            </div>
+                            <div class="form-group">
+                                <label>Priorità (1-10)</label>
+                                <input type="number" id="task-priority" class="text-input" value="5" min="1" max="10">
+                            </div>
+                        </div>
+
+                        <div class="modal-actions">
+                            <button class="btn btn-secondary" onclick="closeNewTaskModal()">Annulla</button>
+                            <button class="btn btn-primary" onclick="createTask()">Crea Task</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Anti-Procrastination Section -->
+            <section id="antiproc" class="section">
+                <div class="antiproc-container">
+                    <div class="card motivation-card">
+                        <h3>💪 Messaggio Motivazionale</h3>
+                        <p class="motivation-text" id="motivation-text">Caricamento...</p>
+                        <button class="btn btn-secondary" onclick="getMotivation()">🔄 Nuovo</button>
+                    </div>
+
+                    <div class="card diagnosis-card">
+                        <h3>🔍 Cosa ti blocca?</h3>
+                        <p class="subtitle">Seleziona il motivo del tuo blocco</p>
+                        <div class="block-reasons">
+                            <button class="reason-btn" data-reason="too_big">📦 Task troppo grande</button>
+                            <button class="reason-btn" data-reason="unclear">❓ Non so cosa fare</button>
+                            <button class="reason-btn" data-reason="boring">😴 È noioso</button>
+                            <button class="reason-btn" data-reason="scary">😰 Ho paura di fallire</button>
+                            <button class="reason-btn" data-reason="perfectionism">✨ Perfezionismo</button>
+                            <button class="reason-btn" data-reason="low_energy">🔋 Poca energia</button>
+                            <button class="reason-btn" data-reason="overwhelmed">🌊 Sono sopraffatto</button>
+                        </div>
+                    </div>
+
+                    <div class="card intervention-card" id="intervention-card" style="display: none;">
+                        <h3>💡 <span id="intervention-technique"></span></h3>
+                        <p class="intervention-message" id="intervention-message"></p>
+                        <div class="intervention-action">
+                            <strong>👉 Azione:</strong>
+                            <p id="intervention-action"></p>
+                        </div>
+                    </div>
+
+                    <div class="card ritual-card">
+                        <h3>🎯 Rituale di Avvio</h3>
+                        <p class="subtitle">Segui questi passi per iniziare</p>
+                        <ol class="ritual-list" id="ritual-list">
+                            <!-- Popolato via JS -->
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Achievements Section -->
+            <section id="achievements" class="section">
+                <div class="section-header">
+                    <h2>🏆 I Miei Achievements</h2>
+                </div>
+
+                <div class="achievements-grid" id="achievements-list">
+                    <!-- Popolato via JS -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Achievement Popup -->
+    <div class="achievement-popup" id="achievement-popup">
+        <div class="achievement-popup-content">
+            <span class="achievement-popup-icon" id="achievement-popup-icon">🏆</span>
+            <div>
+                <h4>Achievement Sbloccato!</h4>
+                <p id="achievement-popup-name"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
