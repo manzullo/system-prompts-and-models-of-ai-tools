@@ -174,6 +174,17 @@ class Analytics:
         daily = self.get_daily_summary()
         profile = self.db.get_user_profile()
 
+        # Se non ci sono dati, ritorna insight di benvenuto
+        if 'message' in weekly or 'total_focus_hours' not in weekly:
+            insights.append({
+                'type': 'info',
+                'icon': '👋',
+                'title': 'Benvenuto!',
+                'message': 'Inizia a lavorare per vedere i tuoi insights.',
+                'action': 'Crea il tuo primo progetto'
+            })
+            return insights
+
         # Insight focus
         if weekly['total_focus_hours'] < 10:
             insights.append({
