@@ -1,0 +1,16 @@
+# Project Decision Tool - Dependencies
+# La maggior parte usa solo la libreria standard Python
+
+# Nessuna dipendenza esterna richiesta!
+# Il progetto usa solo:
+# - sqlite3 (built-in)
+# - threading (built-in)
+# - datetime (built-in)
+# - dataclasses (built-in, Python 3.7+)
+# - enum (built-in)
+# - typing (built-in)
+# - os, sys, time (built-in)
+
+# Opzionali per funzionalità avanzate:
+# rich>=13.0.0  # Per terminal UI avanzata (opzionale)
+# prompt_toolkit>=3.0.0  # Per input avanzato (opzionale)
